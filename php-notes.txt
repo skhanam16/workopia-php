@@ -18,3 +18,5 @@ If your script is inside a subdirectory like
 
  so the var_dump(__DIR__);
  string(24) "C:\xampp\htdocs\workopia"
+
+ {$name} ->php interpolotion
