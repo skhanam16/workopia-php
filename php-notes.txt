@@ -1,0 +1,20 @@
+run php on integrated terminal
+
+php -S localhost:8000
+model view controller
+
+chmove ange index.php to public folder and let the php server recognise by following command
+php -S localhost:8000 -t public
+
+php docblocker extension
+
+
+In PHP, __DIR__ is a magic constant that represents the directory of the current script. 
+It provides the absolute file path to the directory where the file is located, 
+and it doesn't include the trailing slash at the end.
+If your script is located at /var/www/html/myproject/index.php, then __DIR__ will return /var/www/html/myproject.
+If your script is inside a subdirectory like
+ /var/www/html/myproject/subdir/script.php, __DIR__ will return /var/www/html/myproject/subdir.
+
+ so the var_dump(__DIR__);
+ string(24) "C:\xampp\htdocs\workopia"

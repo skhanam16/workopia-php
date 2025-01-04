@@ -1,0 +1,7 @@
+
+/vendor
+/mode_modules
+/config/db.php
+.env
+.vscode
+.DB_store
