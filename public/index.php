@@ -15,7 +15,7 @@ $router = new Router;
 $routes = require basePath('routes.php');
 
 //Get the current request URI
-$uri = $_SERVER['REQUEST_URI'];
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // Get the current request Method i.e GET, POST
 $method = $_SERVER['REQUEST_METHOD'];

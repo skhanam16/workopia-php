@@ -76,6 +76,11 @@ function inspectAndDie($value)
     die();
 }
 
+/**
+ * Format Salary
+ * @return string $Salary
+ */
+
 function formatSalary($salary)
 {
     return '$' . number_format($salary, 2, '.', ',');

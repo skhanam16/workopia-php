@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<?php
 
-<body>
-    <?php loadView('listings/index') ?>
-</body>
+$config = require basePath('config/db.php');
 
-</html>
+//instance of Database
+$db = new Database($config);
+
+// now call the query method from the Database class
+
+$listings = $db->query('SELECT* FROM listings')->fetchAll();
+loadView('listings/index', [
+    'listings' => $listings,
+]);
+// echo $listings;
+// inspect($listings);
+// inspect('home');
