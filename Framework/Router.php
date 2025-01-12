@@ -1,5 +1,9 @@
 <?php
 
+namespace Framework;
+
+
+
 // $routes = require basename('routes.php');
 // if (array_key_exists($uri, $routes)) {
 //     require basePath($routes[$uri]);
@@ -16,16 +20,22 @@ class Router
      * Add a new route
      * @params string $uri
      * @params string $method
-     * @params string $controller
+     * @params string $action
+     * separeted by the @ symbol
      * return void
      */
 
-    public function registerRoute($method, $uri, $controller)
+    public function registerRoute($method, $uri, $action)
     {
+
+        $arr =  explode('@', $action);
+        list($controller, $controllerMethod) =  $arr;
+        // inspectAndDie($controllerMethod);
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
-            'controller' => $controller
+            'controller' => $controller,
+            'controllerMethod' => $controllerMethod,
         ];
     }
 
@@ -94,13 +104,19 @@ class Router
 
     public function route($uri, $method)
     {
+
         foreach ($this->routes as $route) {
             if ($route['uri'] === $uri && $route['method'] === $method) {
 
-                require basePath($route['controller']);
+                // Extract controller and method from route
+                $controllerClass = 'App\\controllers\\' . $route['controller'];
+                $controllerMethod = $route['controllerMethod'];
+                $controllerInstance = new $controllerClass();
+                $controllerInstance->$controllerMethod();
                 return;
             }
         }
-        $this->error(404);
+
+        $this->error();
     }
 }

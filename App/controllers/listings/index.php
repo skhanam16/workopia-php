@@ -1,5 +1,7 @@
+
 <?php
 
+use Framework\Database;
 
 $config = require basePath('config/db.php');
 
@@ -8,8 +10,8 @@ $db = new Database($config);
 
 // now call the query method from the Database class
 
-$listings = $db->query('SELECT* FROM listings LIMIT 6')->fetchAll();
-loadView('home', [
+$listings = $db->query('SELECT* FROM listings')->fetchAll();
+loadView('listings/index', [
     'listings' => $listings,
 ]);
 // echo $listings;

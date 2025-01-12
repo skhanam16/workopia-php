@@ -1,5 +1,12 @@
 <?php
 
+namespace Framework;
+
+use PDO;
+use PDOException;
+use Exception;
+
+
 class Database
 {
     public $conn;
@@ -10,6 +17,7 @@ class Database
     public function __construct($config)
     {
         $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};";
+
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
@@ -31,15 +39,20 @@ class Database
      * $this->conn this is the PDP instance
      */
 
-    public function query($query)
+    public function query($query, $params = [])
     {
         try {
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute();
-            return $stmt;
-            $listing = $stmt->fetchAll();
+            $sth = $this->conn->prepare($query);
+
+            // Bind named parameters
+            foreach ($params as $param => $value) {
+                $sth->bindValue(':' . $param, $value);
+            }
+
+            $sth->execute();
+            return $sth;
         } catch (PDOException $e) {
-            throw new EXception("Failed to fetch data from the database: {$e->getMessage()}");
+            throw new Exception("Query execution failed: " . $e->getMessage());
         }
     }
 }

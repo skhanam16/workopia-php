@@ -1,15 +1,33 @@
 <?php
-require '../helpers.php';
+require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../helpers.php';
+
+use Framework\Router;
+use Framework\Database;
 
 // Connect to Database Class
-require basePath('Database.php');
+// require basePath('Framework/Database.php');
+// require basePath('Framework/Router.php');
+
+// spl_autoload_register(
+//     function ($class) {
+//         $path = basePath('Framework/' . $class . '.php');
+//         if (file_exists($path)) {
+//             require $path;
+//         }
+//     }
+
+// );
+
+
+
 $config = require basePath('config/db.php');
-require basePath('Router.php');
+
 $db = new Database($config);
 
-
+$router = new Router();
 // Instantiating the router
-$router = new Router;
+
 
 // get routes
 $routes = require basePath('routes.php');

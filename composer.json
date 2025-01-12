@@ -1,0 +1,16 @@
+{
+    "name": "shaleha16/workopia",
+    "description": "Job listing application",
+    "authors": [
+      {
+        "name": "Shaleha",
+        "email": "shaleha@gmail.com"
+      }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Framework\\": "Framework/",
+        "App\\": "App/"
+      }
+    }
+  }
