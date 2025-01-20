@@ -85,3 +85,27 @@ function formatSalary($salary)
 {
     return '$' . number_format($salary, 2, '.', ',');
 }
+
+
+/**
+ * Sanitize users data
+ * @params string $dirty
+ * @return string
+ */
+
+function sanitize($dirty)
+{
+    return  filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
+}
+
+/**
+ * Redirect to a given url
+ * @params string $url
+ * @return void 
+ */
+
+function redirect($url)
+{
+    header("Location: {$url}");
+    exit;
+}

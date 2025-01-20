@@ -13,28 +13,39 @@ loadPartials("top-banner");
         <div class="message bg-green-100 p-3 my-3">
           This is a success message.
         </div> -->
-        <form method="POST">
+        <form method="POST" action='/listings'>
             <h2 class="text-2xl font-bold mb-6 text-center text-gray-500">
                 Job Info
             </h2>
+            <?php if (isset($errors)) : ?>
+                <?php foreach ($errors as $error) : ?>
+                    <div class="message bg-red-100 my-3">
+                        <?= $error; ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
             <div class="mb-4">
                 <input
                     type="text"
                     name="title"
                     placeholder="Job Title"
+                    value="<?php $listing['title'] ?? '' ?>"
                     class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
             <div class="mb-4">
                 <textarea
                     name="description"
                     placeholder="Job Description"
-                    class="w-full px-4 py-2 border rounded focus:outline-none"></textarea>
+                    class="w-full px-4 py-2 border rounded focus:outline-none">
+                    <?php $listing['description'] ?? '' ?></textarea>
             </div>
             <div class="mb-4">
                 <input
                     type="text"
                     name="salary"
                     placeholder="Annual Salary"
+                    value="<?php $listing['salary']  ?? '' ?>"
                     class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
             <div class="mb-4">
@@ -42,6 +53,7 @@ loadPartials("top-banner");
                     type="text"
                     name="requirements"
                     placeholder="Requirements"
+                    value="<?php $listing['requirements'] ?? '' ?>"
                     class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
             <div class="mb-4">
@@ -49,8 +61,18 @@ loadPartials("top-banner");
                     type="text"
                     name="benefits"
                     placeholder="Benefits"
+                    value="<?php $listing['benefits']  ?? '' ?>"
                     class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
+            <div class="mb-4">
+                <input
+                    type="text"
+                    name="tags"
+                    placeholder="Tags"
+                    value="<?php $listing['tags']  ?? '' ?>"
+                    class="w-full px-4 py-2 border rounded focus:outline-none" />
+            </div>
+
             <h2 class="text-2xl font-bold mb-6 text-center text-gray-500">
                 Company Info & Location
             </h2>
@@ -59,6 +81,7 @@ loadPartials("top-banner");
                     type="text"
                     name="company"
                     placeholder="Company Name"
+                    value="<?php $listing['company']  ?? '' ?>"
                     class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
             <div class="mb-4">
@@ -66,6 +89,7 @@ loadPartials("top-banner");
                     type="text"
                     name="address"
                     placeholder="Address"
+                    value="<?php $listing['address']  ?? '' ?>"
                     class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
             <div class="mb-4">
@@ -73,6 +97,7 @@ loadPartials("top-banner");
                     type="text"
                     name="city"
                     placeholder="City"
+                    value="<?php $listing['city']  ?? '' ?>"
                     class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
             <div class="mb-4">
@@ -80,6 +105,7 @@ loadPartials("top-banner");
                     type="text"
                     name="state"
                     placeholder="State"
+                    value="<?php $listing['state']  ?? '' ?>"
                     class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
             <div class="mb-4">
@@ -87,6 +113,7 @@ loadPartials("top-banner");
                     type="text"
                     name="phone"
                     placeholder="Phone"
+                    value="<?php $listing['phone']  ?? '' ?>"
                     class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
             <div class="mb-4">
@@ -94,6 +121,7 @@ loadPartials("top-banner");
                     type="email"
                     name="email"
                     placeholder="Email Address For Applications"
+                    value="<?php $listing['email']  ?? '' ?>"
                     class="w-full px-4 py-2 border rounded focus:outline-none" />
             </div>
             <button

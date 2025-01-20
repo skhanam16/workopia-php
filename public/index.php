@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../helpers.php';
 
@@ -35,8 +37,7 @@ $routes = require basePath('routes.php');
 //Get the current request URI
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Get the current request Method i.e GET, POST
-$method = $_SERVER['REQUEST_METHOD'];
 
-//Route the request
-$router->route($uri, $method);
+
+//Passing the $method fot current Route the request
+$router->route($uri);
