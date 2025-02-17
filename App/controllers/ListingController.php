@@ -249,25 +249,47 @@ class ListingController
             "email"
         ];
 
-        // inspectAndDie($allowedFields);
-        $updatedValues = [];
-        $updatedValues =array_intersect_key($_POST, array_flip($allowedFields));
-        $updatedValues = array_map('sanitize',  $updatedValues);
+     
+        $updateValues = [];
+        $updateValues =array_intersect_key($_POST, array_flip($allowedFields));
+        // inspectAndDie($updateValues);
+        $updateValues = array_map('sanitize',  $updateValues);
         $requiredFields =['title', 'description', 'salary', 'email', 'city' ,'state'];
+        //  inspectAndDie($updateValues);
         $errors = [];
        foreach($requiredFields as $field){
-        if(empty($updatedValues[$field]) || !Validation::string($updatedValues[$field])){
+        if(empty($updateValues[$field]) || !Validation::string($updateValues[$field])){
             $errors[$field] =ucwords($field) . " is required";
         }
        }
        if(!empty($errors)){
-        loadView('listing/edit', [
+        loadView('listings/edit', [
             'listing' =>$listing,
             'errors' =>$errors
         ]);
         exit;
        }
-       inspectAndDie( $errors);
+
+       else{
+        // Submit to database
+        // inspectAndDie('Success');
+        // inspectAndDie($_POST);
+        $updateFields = [];
+        foreach(array_keys($updateValues) as $field){
+            // inspect($field);
+        $updateFields[] = "{$field} =:{$field}";
+       
+
+        }
+        $updateFields = implode(', ', $updateFields);
+        // inspectAndDie(  $updateFields );
+        $updateQuery = "UPDATE listings SET $updateFields WHERE id =:id";
+        $updateValues['id'] = $id;
+ $this->db->query($updateQuery, $updateValues);
+ $_SESSION['success_message'] = 'Listing udpated';
+ redirect('/listings/' .$id);
+       }
+   
      }
 }
 // end of class
