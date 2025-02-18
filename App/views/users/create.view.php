@@ -18,6 +18,7 @@ loadPartials("navbar");
               type="text"
               name="name"
               placeholder="Full Name"
+               value='<?= $user['name'] ?? '' ?>'
               class="w-full px-4 py-2 border rounded focus:outline-none"
             />
           </div>
@@ -26,6 +27,7 @@ loadPartials("navbar");
               type="email"
               name="email"
               placeholder="Email Address"
+               value='<?= $user['email'] ?? '' ?>'
               class="w-full px-4 py-2 border rounded focus:outline-none"
             />
           </div>
@@ -34,6 +36,7 @@ loadPartials("navbar");
               type="text"
               name="city"
               placeholder="City"
+               value='<?= $user['city'] ?? '' ?>'
               class="w-full px-4 py-2 border rounded focus:outline-none"
             />
           </div>
@@ -41,7 +44,8 @@ loadPartials("navbar");
             <input
               type="text"
               name="state"
-              placeholder="State"
+              placeholder="state"
+               value='<?= $user['state'] ?? '' ?>'
               class="w-full px-4 py-2 border rounded focus:outline-none"
             />
           </div>
