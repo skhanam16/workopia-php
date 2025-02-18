@@ -35,11 +35,12 @@ function loadView($name, $data = [])
 
 
 
-function loadPartials($name)
+function loadPartials($name, $data =[])
 {
     // require basePath("views/partials/{$name}.php");
     $partialPath = basePath("App/views/partials/{$name}.php");;
     if (file_exists($partialPath)) {
+        extract($data);
         // require basePath("views/{$name}.view.php");
         require $partialPath;
     } else {
@@ -109,3 +110,5 @@ function redirect($url)
     header("Location: {$url}");
     exit;
 }
+
+

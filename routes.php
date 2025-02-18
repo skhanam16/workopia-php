@@ -13,3 +13,10 @@ $router->post('/listings', 'ListingController@store');
 $router->put('/listings/{id}', 'ListingController@update');
 $router->delete('/listings/{id}', 'ListingController@destroy');
 
+//Users controller
+
+$router->get('/auth/create', 'UserController@create');
+$router->get('/auth/login', 'UserController@login');
+
+$router->post('/auth/register', 'UserController@store');
+
