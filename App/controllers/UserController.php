@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use Framework\Database;
 use Framework\Validation;
+use Framework\Session;
 
 class UserController{
 protected $db;
@@ -14,13 +15,8 @@ public function __construct(){
 $this->db = new Database($config);
 }
 
-
 public function login(){
     loadView('users/login');
-}
-
-public function create(){
-    loadView('users/create');
 }
 
 /**
@@ -105,9 +101,99 @@ public function create(){
     // Use prepared statements to safely insert data into the database
     $this->db->query('INSERT INTO users (name, email, city, state, password) VALUES (:name, :email, :city, :state, :password)', $params);
  
+    //Get user Id
+    $userId = $this->db->conn->lastInsertId();
+    // Set user session
+    Session::set('user', [
+        'id' =>$userId,
+        'name' => $name,
+        'email' => $email,
+        'city' => $city,
+        'state' => $state,
+    ]);
+//    inspectAndDie(Session::get('user'));
+    
     // Redirect to the homepage or another page after successful insertion
     redirect('/');
  }
+/**
+ * Logout a user and kill session
+ * @return void
+ */
 
+ public function logout(){
+    Session::clearAll();
+    $params = session_get_cookie_params();
+    // setcookie('PHPSESSID', '' , time);
+
+// Set a cookie named "user" with value "JohnDoe" that expires in 1 hour
+$expire_time = time() - 86400; // 1 hour from now
+setcookie("PHPSESSID", " ", $expire_time, "/"); // Available throughout the entire domain
+redirect('/');
+ }
+
+ /**
+  * Authenticate a user with email and password
+  *@return void
+  */
+  public function authenticate(){
+$email =$_POST['email'];
+$password = $_POST['password'];
+$errors = [];
+
+if(!Validation::email($email)){
+    $errors['email'] = 'Please enter a valid email';
+}
+
+if(!Validation::string($password, 6)){
+    $errors['password'] = 'Password must be at least 6 characters';
+
+}
+
+// Check for errors
+
+if(!empty($errors)){
+    loadView('users/login', [
+        'errors' => $errors
+
+    ]);
+    exit;
+}
+
+// check for email
+$params = [
+    'email' =>$email
+];
+
+$user = $this->db->query('SELECT * FROM users WHERE email=:email', $params)->fetch();
+// inspectAndDie($user);
+if(!$user){
+    $errors['email'] = "Incorrect credentials";
+    loadView('users/login', [
+        'errors' => $errors
+
+    ]);
+    exit;
+}
+
+// Check if password is not correct
+if(!password_verify($password, $user->password)){
+    $errors['email'] = "Incorrect credentials";
+    loadView('users/login', [
+        'errors' => $errors
+
+    ]);
+    exit;
+}
+Session::set('user', [
+    'id' =>$user->id,
+    'name' => $user->name,
+    'email' => $user->email,
+    'city' => $user->city,
+    'state' => $user->state,
+]);
+
+redirect('/');
+  }
 
 }
